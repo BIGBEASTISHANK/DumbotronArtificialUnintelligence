@@ -5,7 +5,7 @@ import tokenizer.tokenizer as tokenizerModule
 import data.prepareDataset as prepareDataset
 import model.train as trainModule
 import generate as generateModule
-import countParameter
+import countMatrics
 
 
 def fileArgumentsParse():
@@ -26,6 +26,13 @@ def fileArgumentsParse():
         "--generate", action="store_true", help="Generate text from a prompt"
     )
     parser.add_argument(
+        "--countMatrics",
+        action="store_true",
+        help="Count the number of matrics in the model",
+    )
+
+    # Secondary Args
+    parser.add_argument(
         "--prompt", type=str, default="", help="Prompt to generate from"
     )
     parser.add_argument(
@@ -35,11 +42,6 @@ def fileArgumentsParse():
         "--temperature", type=float, default=1.0, help="Sampling temperature"
     )
     parser.add_argument("--topK", type=int, default=50, help="Top-k sampling")
-    parser.add_argument(
-        "--countParameter",
-        action="store_true",
-        help="Count the number of parameters in the model",
-    )
 
     return parser.parse_args()
 
@@ -92,8 +94,8 @@ def main():
         )
         print(output)
     
-    if args.countParameter:
-        countParameter.countParameter(globalSettings.MODEL_SAVE_PATH)
+    if args.countMatrics:
+        countMatrics.countMatrics(globalSettings.MODEL_SAVE_PATH)
 
 
 if __name__ == "__main__":
